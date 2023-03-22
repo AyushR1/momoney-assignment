@@ -98,11 +98,11 @@ func (h *APIHandler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Delete expired cache entries
-	for k, v := range h.Cache {
-		if v.Expire.Before(time.Now()) {
-			delete(h.Cache, k)
-		}
-	}
+	// for k, v := range h.Cache {
+	// 	if v.Expire.Before(time.Now()) {
+	// 		delete(h.Cache, k)
+	// 	}
+	// }
 
 	// Write the response to the client
 	log.Println("Data fetched from API endpoint")
