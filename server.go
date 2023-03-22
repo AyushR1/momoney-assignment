@@ -45,15 +45,22 @@ func (h *APIHandler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	// Get the API endpoint and ID from the URL
 	endpoint := r.URL.Path[1:]
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+
 	if err != nil {
 		http.Error(w, "Invalid ID", http.StatusBadRequest)
 		return
 	}
 
+	iscaching, err := strconv.Atoi(r.URL.Query().Get("cache"))
+
+	if err != nil {
+		iscaching = 0
+	}
+
 	// Check if the response is cached
 	key := fmt.Sprintf("%s/%d", endpoint, id)
 	cacheEntry, ok := h.Cache[key]
-	if ok && cacheEntry.Expire.After(time.Now()) {
+	if ok && cacheEntry.Expire.After(time.Now()) && iscaching == 1 {
 		// Serve the response from cache
 		log.Println("Data fetched from cache")
 		responseJSON, err := json.Marshal(cacheEntry.Response)
