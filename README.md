@@ -28,8 +28,15 @@ In essence, the cache server acts as a proxy for APIs from [typicode](https://js
 
 To get the expected data, you need to pass the `id` and `cache` parameters in the endpoints. The allowed endpoints are:
 
-- [https://cacheserver.ayushr1.repl.co/posts/](https://cacheserver.ayushr1.repl.co/posts/)
-- [https://cacheserver.ayushr1.repl.co/todos/](https://cacheserver.ayushr1.repl.co/todos/)
+For deployed
+
+- [https://cacheserver.ayushr1.repl.co/posts](https://cacheserver.ayushr1.repl.co/posts/)
+- [https://cacheserver.ayushr1.repl.co/todos](https://cacheserver.ayushr1.repl.co/todos/)
+
+For Local Run
+
+- [http://localhost:8080/posts](http://localhost:8080/posts)
+- [http://localhost:8080/todos](http://localhost:8080/todos)
 
 The server fetches the response from the API on the first call, and if the `cache` parameter is set to 1 and the cached data is available, subsequent calls are fetched from the cache.
 
@@ -69,6 +76,15 @@ bash run.sh
 ```
 
 The server will be running locally.
+
+# Notes
+
+ [typicode](https://jsonplaceholder.typicode.com/) shows reponse for ID Values between 1 to 100 only.
+
+So please pass id in range of 1 to 100
+
+cache accepts value of 0 or 1.
+
 
 # Presentation
 
