@@ -51,13 +51,14 @@ func (h *APIHandler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//Get the cache parameter from the URL
 	iscaching, err := strconv.Atoi(r.URL.Query().Get("cache"))
 
 	if err != nil {
 		iscaching = 0
 	}
 
-	// Check if the response is cached
+	// Check if the response is cached and not expired and cache parameter is 1
 	key := fmt.Sprintf("%s/%d", endpoint, id)
 	cacheEntry, ok := h.Cache[key]
 	if ok && cacheEntry.Expire.After(time.Now()) && iscaching == 1 {
@@ -73,6 +74,7 @@ func (h *APIHandler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// If it's not cached or expired, fetch the data from the API
 	// Fetch the data from the API
 	var response interface{}
 	switch endpoint {
@@ -158,7 +160,6 @@ func main() {
 	router.HandleFunc("/posts", apiHandler.HandleRequest)
 	router.HandleFunc("/todos", apiHandler.HandleRequest)
 
-	// Start the server
 	// Start the server
 	addr := ":8080"
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
